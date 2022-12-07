@@ -22,6 +22,10 @@ CREATE DATABASE `travel_portal` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE u
 
 use `travel_portal` ;
 
+CREATE USER 'travelportal'@'localhost' IDENTIFIED BY 'travelportal';
+
+GRANT ALL PRIVILEGES ON database_name.* TO 'travelportal'@'localhost';
+
 DROP TABLE IF EXISTS `employee`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -33,6 +37,7 @@ CREATE TABLE `employee` (
   `mobile_number` double NOT NULL,
   `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `email` varchar(255) DEFAULT NULL,
+  `password` varchar(400) DEFAULT NULL,
   `linked_in` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `user_id_UNIQUE` (`user_id`)

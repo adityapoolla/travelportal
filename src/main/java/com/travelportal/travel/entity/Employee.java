@@ -15,15 +15,9 @@ import org.springframework.data.annotation.CreatedDate;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@Data
 @Entity
 @Table(name = "employee", schema = "travel_portal")
 @JsonPropertyOrder({"id","firstName","lastName","email","address","linkedIn","mobileNumber","created_time"})
@@ -65,7 +59,11 @@ public class Employee implements Serializable{
 	@Column(name = "email")
 	@JsonProperty(value = "email")
 	private String email;
-
+	
+	//@Column(name="password")
+    //@JsonProperty(value="password")
+	//private String password;
+    
 	@Column(name = "address")
 	@JsonProperty(value = "address")
 	private String address;
