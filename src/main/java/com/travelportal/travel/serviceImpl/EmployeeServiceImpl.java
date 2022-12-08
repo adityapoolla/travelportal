@@ -24,15 +24,16 @@ public class EmployeeServiceImpl implements EmployeeService{
 	}
 
 	@Override
-	public Employee findUserById(Long id) {
-		Optional<Employee> findById = employeeRepository.findById(id);
-		return findById.get();
+	public Employee findUserByEmail(String email) {
+		Optional<Employee> findByEmail = employeeRepository.findById(email);
+		return findByEmail.get();
 	}
 
 	@Override
 	public List<Employee> getAllEmployees() {
-		return employeeRepository.findAll();
+		return (List<Employee>) employeeRepository.findAll();
 	}
+
 
 	
 }

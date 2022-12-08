@@ -1,15 +1,20 @@
 package com.travelportal.travel.entity;
 
-import java.io.Serializable;
+import java.time.LocalDateTime;
+//import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -17,16 +22,20 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import lombok.Data;
 
+
 @Data
 @Entity
 @Table(name = "employee", schema = "travel_portal")
 @JsonPropertyOrder({"id","firstName","lastName","email","address","linkedIn","mobileNumber","created_time"})
-public class Employee implements Serializable{
+public class Employee{
+	
+	
+	
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	//ōprivate static final long serialVersionUID = 1L;
 
 	/**
 	 * 
@@ -42,46 +51,51 @@ public class Employee implements Serializable{
 	}
 
 	@Id
-	//@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name = "user_id")
 	@JsonProperty(value = "id")
 	private Long id;
 
 	@Column(name = "first_name")
 	@JsonProperty(value = "firstName")
-	private String firstName;
+	public String firstName;
 
 	@Column(name = "last_name")
 	@JsonProperty(value = "lastName")
 	private String lastName;
 	
 
-	@Column(name = "email")
+//	@Column(name = "email")
 	@JsonProperty(value = "email")
 	private String email;
 	
 	//@Column(name="password")
-    //@JsonProperty(value="password")
-	//private String password;
+    @JsonProperty(value="password")
+	private String password;
     
-	@Column(name = "address")
+//	@Column(name = "address")
 	@JsonProperty(value = "address")
 	private String address;
 
-	//@Column(name = "linkedIn")
+	
 	@Column(name = "linked_In")
 	@JsonProperty(value = "linkedIn")
 	private String linkedIn;
 
-	@Column(name = "mobile_number")
+    @Column(name = "mobile_number")
 	@JsonProperty(value = "mobileNumber")
 	private String mobileNumber;
     
-	@Column(name = "created_time")
-	@JsonProperty(value = "created_time")
-	@Temporal(TemporalType.TIMESTAMP)
-	@CreatedDate
+    @Column(name = "created_time")
+    @JsonProperty(value = "created_time")
 	private Date created_time;
 
+    @PrePersist
+    void preInsert() {
+    	if(this.created_time == null) {
+    		this.created_time = new Date();
+    	}
+    }
+	
 
 }
