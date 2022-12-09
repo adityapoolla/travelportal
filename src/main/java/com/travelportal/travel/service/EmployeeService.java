@@ -7,7 +7,7 @@ public interface EmployeeService {
 
 	Employee saveEmployee(Employee employee);
 
-    Employee findUserByEmail(String Email);
+	Long findUserByEmail(String Email);
 
     List<Employee> getAllEmployees();
     
