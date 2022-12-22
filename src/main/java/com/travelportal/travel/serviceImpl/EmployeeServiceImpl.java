@@ -11,32 +11,33 @@ import com.travelportal.travel.service.EmployeeService;
 
 @Service
 
+public class EmployeeServiceImpl implements EmployeeService {
 
-public class EmployeeServiceImpl implements EmployeeService{
- 
 	@Autowired
 	private EmployeeRepository employeeRepository;
-	
+
 	@Override
 	public Employee saveEmployee(Employee employee) {
 		return employeeRepository.save(employee);
 	}
-
-	
 
 	@Override
 	public List<Employee> getAllEmployees() {
 		return (List<Employee>) employeeRepository.findAll();
 	}
 
-
-
 	@Override
-	public Long findUserByEmail(String Email) {
-		return employeeRepository.findUser(Email);
+	public Long findUserByEmailandPassword(String email, String password) {
+		return employeeRepository.findUserByEmailandPassword(email, password);
 	}
 
+	@Override
+	public Long findUserByEmail(String email) {
+		return employeeRepository.findUserByEmail(email);
+	}
 
-	
+	@Override
+	public Long update(String email, String password) {
+		return employeeRepository.update(email,password);
+	}
 }
-
