@@ -44,6 +44,12 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		
+		
+		
+		
+		
+		
 	</dependencies>
 	<build>
 		<plugins>
@@ -71,6 +77,8 @@
 			</snapshots>
 		</repository>
 	</repositories>
+	
+	
 	<pluginRepositories>
 		<pluginRepository>
 			<id>spring-milestones</id>

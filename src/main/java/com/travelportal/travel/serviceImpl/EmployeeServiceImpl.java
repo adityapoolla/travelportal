@@ -37,7 +37,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
-	public Long update(String email, String password) {
-		return employeeRepository.update(email,password);
+	public int updatePassword(String password, String email) {
+		return employeeRepository.updatePassword(password,email);
 	}
 }

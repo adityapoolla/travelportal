@@ -12,7 +12,7 @@ public interface EmployeeService {
 
 	Long findUserByEmail(String email);
 	
-	Long update(String email, String password);
+	int updatePassword(String password, String email);
 	
 	List<Employee> getAllEmployees();
 

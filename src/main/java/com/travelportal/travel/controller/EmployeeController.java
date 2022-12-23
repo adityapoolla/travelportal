@@ -1,5 +1,6 @@
 package com.travelportal.travel.controller;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.travelportal.travel.constants.TravelConstants;
 import com.travelportal.travel.entity.Employee;
 import com.travelportal.travel.service.EmployeeService;
 
@@ -17,25 +19,28 @@ import com.travelportal.travel.service.EmployeeService;
 @RequestMapping("/api/travelportal")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class EmployeeController {
+	//Logger logger = LoggerFactory.getLogger(EmployeeController.class);
 
 	@Autowired
 	private EmployeeService employeeService;
 
 	@PostMapping(path = "/saveData", consumes = "application/json", produces = "application/json")
 	public ResponseEntity<String> saveEmployee(@RequestBody Employee employee) {
+		//logger.info(null);
 
 		try {
 			employeeService.saveEmployee(employee);
-			return new ResponseEntity<>("User created", HttpStatus.CREATED);
+			return new ResponseEntity<>(TravelConstants.USER_CREATED, HttpStatus.CREATED);
 		} catch (Exception e) {
-			return new ResponseEntity<>("User creation failed", HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(TravelConstants.USER_CREATION_FAILED, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
 	}
 
 	@PostMapping(path = "/logInUser", consumes = "application/json", produces = "application/json")
 	public ResponseEntity<String> findUserByEmail(@RequestBody Employee employee) {
-
+                
+		    
 		System.err.println("------------ " + employee.email);
 		Long count = employeeService.findUserByEmailandPassword(employee.email, employee.password);
 		System.err.println(count);
@@ -47,32 +52,59 @@ public class EmployeeController {
 		}
 	}
 
-	@RequestMapping(path = "/resetPassword", consumes = "application/json", produces = "application/json")
+	@RequestMapping(path = "/forgotPassword", consumes = "application/json", produces = "application/json")
 	public ResponseEntity<String> findUserBypassword(@RequestBody Employee employee) {
 
 		try {
 			if (StringUtils.isEmpty(employee.password)) {
 				Long count = employeeService.findUserByEmail(employee.email);
 				if (count == 0) {
-					return new ResponseEntity<>("FAILURE", HttpStatus.NOT_FOUND);
+					return new ResponseEntity<>(TravelConstants.FAILURE, HttpStatus.NOT_FOUND);
 				} else {
-					return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
+					return new ResponseEntity<>(TravelConstants.SUCCESS, HttpStatus.OK);
 				}
 			} else {
-			
-				Long counts = employeeService.update(employee.email, employee.password);
-
-				if (counts == 0) {
-					return new ResponseEntity<>("FAILURE", HttpStatus.NOT_FOUND);
+				int status = employeeService.updatePassword(employee.password, employee.email);
+				if (status == 0) {
+					return new ResponseEntity<>(TravelConstants.FAILURE, HttpStatus.NOT_FOUND);
 				} else {
-					return new ResponseEntity<>("DETAILS UPDATED SUCCESSFULLY", HttpStatus.OK);
+					return new ResponseEntity<>(TravelConstants.OK, HttpStatus.OK);
 				}
-
-				// return new ResponseEntity<>("FAILURE", HttpStatus.NOT_FOUND);
+			
 			}
 
 		} catch (Exception e) {
-			return new ResponseEntity<>("Internal Server Error", HttpStatus.INTERNAL_SERVER_ERROR);
+			e.printStackTrace();
+			return new ResponseEntity<>(TravelConstants.INTERNAL_SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+	}
+	
+	
+	@RequestMapping(path = "/resetPassword", consumes = "application/json", produces = "application/json")
+	public ResponseEntity<String> findUser(@RequestBody Employee employee) {
+
+		try {
+			if (StringUtils.isEmpty(employee.password)) {
+				Long count = employeeService.findUserByEmail(employee.email);
+				if (count == 0) {
+					return new ResponseEntity<>(TravelConstants.FAILURE, HttpStatus.NOT_FOUND);
+				} else {
+					return new ResponseEntity<>(TravelConstants.SUCCESS, HttpStatus.OK);
+				}
+			} else {
+				int status = employeeService.updatePassword(employee.password, employee.email);
+				if (status == 0) {
+					return new ResponseEntity<>(TravelConstants.FAILURE, HttpStatus.NOT_FOUND);
+				} else {
+					return new ResponseEntity<>(TravelConstants.OK, HttpStatus.OK);
+				}
+			
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(TravelConstants.INTERNAL_SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
 	}
