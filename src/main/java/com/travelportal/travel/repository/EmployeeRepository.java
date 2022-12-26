@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 
 import com.travelportal.travel.entity.Employee;
 
+import java.util.Optional;
+
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Long>{
 	
@@ -22,5 +24,6 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long>{
 	@Modifying
 	@Query("UPDATE Employee set password=:password where email=:email")
 	public int updatePassword(String password, String email);
+
 }
 

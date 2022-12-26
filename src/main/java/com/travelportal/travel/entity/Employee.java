@@ -44,10 +44,14 @@ public class Employee {
 	@JsonProperty(value = "id")
 	private Long id;
 
+	@Getter
+	@Setter
 	@Column(name = "first_name")
 	@JsonProperty(value = "firstName")
 	public String firstName;
 
+	@Getter
+	@Setter
 	@Column(name = "last_name")
 	@JsonProperty(value = "lastName")
 	private String lastName;
@@ -64,14 +68,20 @@ public class Employee {
 	@JsonProperty(value = "password")
 	public String password;
 
+	@Getter
+	@Setter
 	@Column(name = "address")
 	@JsonProperty(value = "address")
 	private String address;
 
+	@Getter
+	@Setter
 	@Column(name = "linked_In")
 	@JsonProperty(value = "linkedIn")
 	private String linkedIn;
 
+	@Getter
+	@Setter
 	@Column(name = "mobile_number")
 	@JsonProperty(value = "mobileNumber")
 	private String mobileNumber;

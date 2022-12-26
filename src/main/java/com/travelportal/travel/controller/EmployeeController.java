@@ -1,19 +1,18 @@
 package com.travelportal.travel.controller;
 
 
+import com.travelportal.travel.exception.EmployeeNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.travelportal.travel.constants.TravelConstants;
 import com.travelportal.travel.entity.Employee;
 import com.travelportal.travel.service.EmployeeService;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/travelportal")
@@ -42,6 +41,8 @@ public class EmployeeController {
                 
 		    
 		System.err.println("------------ " + employee.email);
+		System.err.println("------------PWD  " + employee.password);
+
 		Long count = employeeService.findUserByEmailandPassword(employee.email, employee.password);
 		System.err.println(count);
 		if (count == 0) {
@@ -109,4 +110,15 @@ public class EmployeeController {
 
 	}
 
+	@PutMapping(path = "/employee/{id}", consumes = "application/json", produces = "application/json")
+	public ResponseEntity<String> updateUser(@RequestBody Employee employee, @PathVariable("id") Long id) {
+		try {
+			employeeService.updateEmployee(employee, id);
+		} catch(EmployeeNotFoundException e) {
+			return new ResponseEntity<>(TravelConstants.INVALID_EMAIL_ID, HttpStatus.NOT_FOUND);
+		} catch (Exception e) {
+			return new ResponseEntity<>(TravelConstants.INTERNAL_SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<>(TravelConstants.SUCCESS, HttpStatus.OK);
+	}
 }

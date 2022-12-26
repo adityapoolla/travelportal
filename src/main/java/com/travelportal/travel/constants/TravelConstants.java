@@ -1,7 +1,9 @@
 package com.travelportal.travel.constants;
 
 public final class TravelConstants {
-	
+
+
+
 	private TravelConstants() {}
 	
 	public static final String SUCCESS = "SUCCESS";
@@ -11,4 +13,7 @@ public final class TravelConstants {
     public static final String  OK = "Password updated successfully";
     public static final String  INTERNAL_SERVER_ERROR ="Internal Server Error";
 
+	public static final String NOT_FOUND = "Employee not found in db";
+
+	public static final String INVALID_EMAIL_ID = "Invalid email id";
 }
