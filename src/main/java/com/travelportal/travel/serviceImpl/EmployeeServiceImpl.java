@@ -49,7 +49,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 
 	@Override
-	public void updateEmployee(Employee employee, Long id) {
+	public Employee updateEmployee(Employee employee, Long id) {
 		Optional<Employee> employeeOptional = employeeRepository.findById(id);
 		if(!employeeOptional.isPresent()) {
 			throw new EmployeeNotFoundException(TravelConstants.NOT_FOUND);
@@ -70,7 +70,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		if(!StringUtils.isEmpty(employee.getMobileNumber())) {
 			employeeDb.setMobileNumber(employee.getMobileNumber());
 		}
-		employeeRepository.save(employeeDb);
+		return employeeRepository.save(employeeDb);
 	}
 
 

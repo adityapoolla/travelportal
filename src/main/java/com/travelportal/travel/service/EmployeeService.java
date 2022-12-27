@@ -17,5 +17,5 @@ public interface EmployeeService {
 	
 	List<Employee> getAllEmployees();
 
-	void updateEmployee(Employee employee, Long id);
+	Employee updateEmployee(Employee employee, Long id);
 }

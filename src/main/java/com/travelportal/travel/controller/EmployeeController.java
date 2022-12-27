@@ -111,14 +111,15 @@ public class EmployeeController {
 	}
 
 	@PutMapping(path = "/employee/{id}", consumes = "application/json", produces = "application/json")
-	public ResponseEntity<String> updateUser(@RequestBody Employee employee, @PathVariable("id") Long id) {
+	public ResponseEntity<Employee> updateUser(@RequestBody Employee employee, @PathVariable("id") Long id) {
+		Employee empUpdated;
 		try {
-			employeeService.updateEmployee(employee, id);
+			empUpdated = employeeService.updateEmployee(employee, id);
 		} catch(EmployeeNotFoundException e) {
-			return new ResponseEntity<>(TravelConstants.INVALID_EMAIL_ID, HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		} catch (Exception e) {
-			return new ResponseEntity<>(TravelConstants.INTERNAL_SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		return new ResponseEntity<>(TravelConstants.SUCCESS, HttpStatus.OK);
+		return new ResponseEntity<>(empUpdated, HttpStatus.OK);
 	}
 }
