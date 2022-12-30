@@ -9,11 +9,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.Assert.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -24,6 +25,46 @@ public class EmployeeServiceImplTest {
 
     @Mock
     private EmployeeRepository repository;
+
+
+    @Test
+    public void saveEmployeeTest() {
+        Employee empExpected = buildEmployee();
+        when(repository.save(any(Employee.class))).thenReturn(empExpected);
+        Employee emp = employeeService.saveEmployee(empExpected);
+        assertTrue(empExpected.equals(emp));
+        assertTrue(empExpected.getEmail().equals(emp.getEmail()));
+    }
+
+    @Test
+    public void getAllEmployeesTest() {
+        List<Employee> list = new ArrayList<>();
+        list.add(buildEmployee());
+        when(repository.findAll()).thenReturn(list);
+        List<Employee> actual = employeeService.getAllEmployees();
+        assertTrue(list.size() == actual.size());
+    }
+
+    @Test
+    public void findUserByEmailAndPasswordTest() {
+        when(repository.findUserByEmailandPassword(anyString(), anyString())).thenReturn(2L);
+        Long emp = employeeService.findUserByEmailandPassword(anyString(), anyString());
+        assertTrue(emp == 2L);
+    }
+
+    @Test
+    public void findUserByEmailTest() {
+        when(repository.findUserByEmail(anyString())).thenReturn(2L);
+        Long emp = employeeService.findUserByEmail(anyString());
+        assertTrue(emp == 2L);
+    }
+
+    @Test
+    public void updatePasswordTest() {
+        when(repository.updatePassword(anyString(), anyString())).thenReturn(1);
+        int count = employeeService.updatePassword(anyString(), anyString());
+        assertTrue(count == 1);
+    }
 
     @Test
     public void updateEmployee() {
